@@ -1,4 +1,5 @@
-var express = require("express"),
+const express = require("express"),
+    PORT = 3000,
     mongoose = require("mongoose"),
     passport = require("passport"),
     bodyParser = require("body-parser"),
@@ -215,3 +216,7 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect("/login")
 }
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
