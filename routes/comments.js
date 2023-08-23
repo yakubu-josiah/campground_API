@@ -26,7 +26,10 @@ route.post("/", isLoggedIn, function (req, res) {
             console.log(err);
         } else {
             Comments.create(formData, function (err, newComment) {
-                console.log("Comments added!!!");
+                newComment.author.id = req.user._id;
+                newComment.author.username = req.user.username;
+                newComment.save();
+                console.log("Associative comment with user!!!");
                 campground.comments.push(newComment);
                 campground.save();
                 res.redirect("/yelpcamp/campground/" + id);
