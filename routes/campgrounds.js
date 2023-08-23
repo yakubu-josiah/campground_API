@@ -14,12 +14,20 @@ route.get("/", function (req, res) {
     });
 });
 
-route.get("/addnew", function (req, res) {
+route.get("/addnew", isLoggedIn, function (req, res) {
     res.render("campground/new");
 });
 
-route.post("/", function (req, res) {
-    var newCampground = req.sanitizer(req.body.camp);
+route.post("/", isLoggedIn, function (req, res) {
+
+    var formData = {
+        form: req.body.formData,
+        author: {
+            id: req.user._id,
+            username: req.user.username
+        }
+    };
+    var newCampground = req.sanitizer({ formData: formData });
 
     Campgrounds.create({ newCampground }, function (err, newCamp) {
         if (err) {
@@ -91,5 +99,11 @@ route.delete("/:id", function (req, res) {
     });
 });
 
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated) {
+        return next();
+    }
+    res.redirect("/login")
+}
 
 module.exports = route;
