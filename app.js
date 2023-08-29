@@ -5,8 +5,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    bodySanitizer = require("express-sanitizer"),
-    passportLocalMongoose = require("passport-local-mongoose");
+    bodySanitizer = require("express-sanitizer");
 
 const Users = require("./models/Users");
 
